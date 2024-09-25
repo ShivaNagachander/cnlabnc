@@ -1,0 +1,48 @@
+#include <stdio.h>
+#include <string.h>
+void bit_stuffing(const char* input, char* stuffed) {
+    int count = 0;
+    int j = 0;
+    for (int i = 0; i < strlen(input); i++) {
+        stuffed[j++] = input[i];
+        if (input[i] == '1') {
+            count++;
+            if (count == 5) {
+                stuffed[j++] = '0';
+            }
+        } else {
+            count = 0;
+        }
+    }
+    stuffed[j] = '\0';
+}
+void bit_unstuffing(const char* stuffed, char* unstuffed) {
+    int count = 0;
+    int j = 0;
+    for (int i = 0; i < strlen(stuffed); i++) {
+        unstuffed[j++] = stuffed[i];
+        if (stuffed[i] == '1') {
+            count++;
+            if (count == 5) {
+                i++;
+                count = 0;
+            }
+        } else {
+            count = 0;
+        }
+    }
+    unstuffed[j] = '\0';
+}
+int main() {
+    char data[100];
+    char stuffed[200];
+    char unstuffed[200];
+    printf("Enter data to be transmitted: ");
+    scanf("%s", data);
+    printf("Original Data:      %s\n", data);
+    bit_stuffing(data, stuffed);
+    printf("Bit Stuffed Data:   %s\n", stuffed);
+    bit_unstuffing(stuffed, unstuffed);
+    printf("Unstuffed Data:     %s\n", unstuffed);
+    return 0;
+}
