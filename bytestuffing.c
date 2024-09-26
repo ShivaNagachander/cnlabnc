@@ -1,74 +1,48 @@
 #include <stdio.h>
 #include <string.h>
-void char_stuffing(const char* input, char* stuffed, const char* flag, const char* delimiter, int position) {
-    int j = 0;
-    int count = 0;
-    for (int i = 0; delimiter[i] != '\0'; i++) {
-        stuffed[j++] = delimiter[i];
+int main()
+{
+    char a[20],b[40];
+    int i,n,j;
+    printf("Enter the size of the frame: ");
+    scanf("%d",&n);  
+    printf("Enter the characters in the frame: \n");
+    for (i=0;i<n;i++) 
+    {
+        scanf(" %c",&a[i]);
     }
-    for (int i = 0; i < strlen(input); i++) {
-        if (count == position) {
-            for (int k = 0; flag[k] != '\0'; k++) {
-                stuffed[j++] = flag[k];
-            }
-            count = 0;
+    printf("FRAME: ");
+    for (i=0;i<n;i++) 
+    {
+        printf("%c",a[i]);a
+    }
+    j=0;
+    b[j++]='f';
+    for (i=0;i<n;i++) 
+    {
+        if (a[i]=='f' || a[i]=='s') 
+        {
+            b[j++]='f';
+            b[j++]=a[i];
+        } 
+        else 
+        {
+            b[j++]=a[i];
         }
-        stuffed[j++] = input[i];
-        count++;
     }
-    for (int i = 0; delimiter[i] != '\0'; i++) {
-        stuffed[j++] = delimiter[i];
+    b[j++]='f';
+    b[j]='\0';
+    printf("\nRESULT: ");
+    for (i=0;i<j;i++) 
+    {
+        printf("%c", b[i]);
     }
-    stuffed[j] = '\0'; 
-}
-void char_unstuffing(const char* stuffed, char* unstuffed, const char* flag, const char* delimiter) {
-    int j = 0;
-    int skip = strlen(delimiter);
-    for (int i = skip; i < strlen(stuffed) - skip; i++) {
-        if (strncmp(&stuffed[i], flag, strlen(flag)) == 0) {
-            i += strlen(flag) - 1;
-            continue;
-        }
-        unstuffed[j++] = stuffed[i];
-    }
-    unstuffed[j] = '\0'; 
-}
-int main() {
-    char data[100];
-    char stuffed[200];
-    char unstuffed[200];
-    char flag[10];
-    char delimiter[10];
-    int position;
-    printf("Enter data to be transmitted: ");
-    scanf("%s", data);
-    printf("Enter the delimiter: ");
-    scanf("%s", delimiter);
-    printf("Enter the flag bit: ");
-    scanf("%s", flag);
-    printf("Enter the number of characters after which the flag bit should be added: ");
-    scanf("%d", &position);
-    printf("Original Data:      %s\n", data);
-    char_stuffing(data, stuffed, flag, delimiter, position);
-    printf("Character Stuffed Data: %s\n", stuffed);
-    char_unstuffing(stuffed, unstuffed, flag, delimiter);
-    printf("Unstuffed Data:     %s\n", unstuffed);
+    printf("\n");
     return 0;
 }
 
-
-
-
-
-
-
-
-
-
-Enter data to be transmitted: hellostring
-Enter the delimiter: /
-Enter the flag bit: 4
-Enter the number of characters after which the flag bit should be added: 3
-Original Data:      hellostring
-Character Stuffed Data: /hel4los4tri4ng/
-Unstuffed Data:     hellostring
+Enter the size of the frame: 6
+Enter the characters in the frame: 
+h e l s o f
+FRAME: helsof
+RESULT: fhelfsofff
