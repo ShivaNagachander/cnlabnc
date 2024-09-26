@@ -14,7 +14,7 @@ int main()
     printf("FRAME: ");
     for (i=0;i<n;i++) 
     {
-        printf("%c",a[i]);a
+        printf("%c",a[i]);
     }
     j=0;
     b[j++]='f';
