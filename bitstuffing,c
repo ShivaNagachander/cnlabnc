@@ -33,3 +33,10 @@ void main()
     for(i=0;i<n;i++)
     printf("%d",a[i]);
     }
+
+
+Enter the frame length: 9
+Enter input frame:
+1 1 1 1 1 1 1 1 1
+DATA AFTER STUFFING: 1111101111
+
