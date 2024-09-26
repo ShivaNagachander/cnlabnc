@@ -1,0 +1,74 @@
+#include <stdio.h>
+#include <string.h>
+void char_stuffing(const char* input, char* stuffed, const char* flag, const char* delimiter, int position) {
+    int j = 0;
+    int count = 0;
+    for (int i = 0; delimiter[i] != '\0'; i++) {
+        stuffed[j++] = delimiter[i];
+    }
+    for (int i = 0; i < strlen(input); i++) {
+        if (count == position) {
+            for (int k = 0; flag[k] != '\0'; k++) {
+                stuffed[j++] = flag[k];
+            }
+            count = 0;
+        }
+        stuffed[j++] = input[i];
+        count++;
+    }
+    for (int i = 0; delimiter[i] != '\0'; i++) {
+        stuffed[j++] = delimiter[i];
+    }
+    stuffed[j] = '\0'; 
+}
+void char_unstuffing(const char* stuffed, char* unstuffed, const char* flag, const char* delimiter) {
+    int j = 0;
+    int skip = strlen(delimiter);
+    for (int i = skip; i < strlen(stuffed) - skip; i++) {
+        if (strncmp(&stuffed[i], flag, strlen(flag)) == 0) {
+            i += strlen(flag) - 1;
+            continue;
+        }
+        unstuffed[j++] = stuffed[i];
+    }
+    unstuffed[j] = '\0'; 
+}
+int main() {
+    char data[100];
+    char stuffed[200];
+    char unstuffed[200];
+    char flag[10];
+    char delimiter[10];
+    int position;
+    printf("Enter data to be transmitted: ");
+    scanf("%s", data);
+    printf("Enter the delimiter: ");
+    scanf("%s", delimiter);
+    printf("Enter the flag bit: ");
+    scanf("%s", flag);
+    printf("Enter the number of characters after which the flag bit should be added: ");
+    scanf("%d", &position);
+    printf("Original Data:      %s\n", data);
+    char_stuffing(data, stuffed, flag, delimiter, position);
+    printf("Character Stuffed Data: %s\n", stuffed);
+    char_unstuffing(stuffed, unstuffed, flag, delimiter);
+    printf("Unstuffed Data:     %s\n", unstuffed);
+    return 0;
+}
+
+
+
+
+
+
+
+
+
+
+Enter data to be transmitted: hellostring
+Enter the delimiter: /
+Enter the flag bit: 4
+Enter the number of characters after which the flag bit should be added: 3
+Original Data:      hellostring
+Character Stuffed Data: /hel4los4tri4ng/
+Unstuffed Data:     hellostring
